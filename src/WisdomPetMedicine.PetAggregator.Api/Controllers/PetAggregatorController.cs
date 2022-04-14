@@ -23,6 +23,32 @@ public class PetAggregatorController : ControllerBase
 
         var patients = await daprClient.InvokeMethodAsync<IEnumerable<PatientModel>>(HttpMethod.Get, "hospital", "patientquery");
 
-        return Ok();
+        var result = from pet in pets
+                     join patient in patients on pet.Id equals patient.Id
+                     join rescue in rescues on pet.Id equals rescue.Id
+                     select new
+                     {
+                         pet.Id,
+                         pet.Name,
+                         pet.Breed,
+                         pet.Sex,
+                         pet.Color,
+                         pet.DateOfBirth,
+                         pet.Species,
+                         Hospital = new
+                         {
+                             patient.BloodType,
+                             patient.Weight,
+                             patient.Status,
+                         },
+                         Rescue = new
+                         {
+                             rescue.AdopterId,
+                             rescue.AdopterName,
+                             rescue.AdoptionStatus
+                         }
+                     };
+        return Ok(result);
+
     }
 }
