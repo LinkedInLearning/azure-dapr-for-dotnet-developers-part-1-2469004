@@ -17,7 +17,28 @@ public class PetAggregatorController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        return Ok();
+        var lastQuery = await daprClient.GetStateEntryAsync<StateModel>("statestore", "lastquery");
+        if (lastQuery.Value != null && DateTime.UtcNow <= lastQuery.Value.LastQuery.AddSeconds(30))
+        {
+            return Ok(lastQuery.Value.Data);
+        }
+
+        IEnumerable<dynamic> result;
+        result = await QueryPets();
+
+        bool saved = false;
+        while (!saved)
+        {
+            result = await QueryPets();
+            lastQuery.Value = new StateModel()
+            {
+                LastQuery = DateTime.UtcNow,
+                Data = result
+            };
+            saved = await lastQuery.TrySaveAsync();
+        }
+
+        return Ok(result);
     }
     
     private async Task<IEnumerable<dynamic>> QueryPets()
