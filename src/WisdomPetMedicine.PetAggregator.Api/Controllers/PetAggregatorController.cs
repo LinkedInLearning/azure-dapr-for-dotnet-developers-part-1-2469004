@@ -23,8 +23,7 @@ public class PetAggregatorController : ControllerBase
             return Ok(lastQuery.Value.Data);
         }
 
-        IEnumerable<dynamic> result;
-        result = await QueryPets();
+        IEnumerable<dynamic>? result = null;
 
         bool saved = false;
         while (!saved)
