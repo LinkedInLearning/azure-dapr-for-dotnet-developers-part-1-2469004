@@ -29,11 +29,7 @@ public class PetAggregatorController : ControllerBase
         while (!saved)
         {
             result = await QueryPets();
-            lastQuery.Value = new StateModel()
-            {
-                LastQuery = DateTime.UtcNow,
-                Data = result
-            };
+            lastQuery.Value = new StateModel(DateTime.UtcNow, result);
             saved = await lastQuery.TrySaveAsync();
         }
 
