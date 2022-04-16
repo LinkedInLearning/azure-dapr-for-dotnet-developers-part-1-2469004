@@ -1,0 +1,15 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: statestorage
+  namespace: default
+spec:
+  type: state.azure.tablestorage
+  version: v1
+  metadata:
+  - name: accountName
+    value: "wisdompetmed"
+  - name: accountKey
+    value: "Eb/lT1BiEXpGtuulepMuxKwgCcbLVpk6tnFRgZSoFzIfVEaVpqtLJV4/2Yz2qrjSOiFxm+VVz4JHIj3mbXfvmQ=="
+  - name: tableName
+    value: "state"
