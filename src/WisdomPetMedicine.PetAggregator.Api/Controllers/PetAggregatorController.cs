@@ -17,6 +17,11 @@ public class PetAggregatorController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
+        return Ok();
+    }
+    
+    private async Task<IEnumerable<dynamic>> QueryPets()
+    {
         var pets = await daprClient.InvokeMethodAsync<IEnumerable<PetModel>>(HttpMethod.Get, "pet", "petquery");
 
         var rescues = await daprClient.InvokeMethodAsync<IEnumerable<RescueModel>>(HttpMethod.Get, "rescuequery", "rescuequery");
@@ -48,7 +53,6 @@ public class PetAggregatorController : ControllerBase
                              rescue.AdoptionStatus
                          }
                      };
-        return Ok(result);
-
+        return result;
     }
 }
