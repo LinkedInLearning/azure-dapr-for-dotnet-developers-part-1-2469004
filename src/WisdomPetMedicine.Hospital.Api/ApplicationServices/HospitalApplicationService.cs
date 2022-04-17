@@ -1,4 +1,5 @@
-﻿using WisdomPetMedicine.Hospital.Api.Commands;
+﻿using Dapr.Client;
+using WisdomPetMedicine.Hospital.Api.Commands;
 using WisdomPetMedicine.Hospital.Domain.Entities;
 using WisdomPetMedicine.Hospital.Domain.Repositories;
 using WisdomPetMedicine.Hospital.Domain.ValueObjects;
@@ -8,10 +9,13 @@ namespace WisdomPetMedicine.Hospital.Api.ApplicationServices;
 public class HospitalApplicationService
 {
     private readonly IPatientAggregateStore patientAggregateStore;
+    private readonly DaprClient daprClient;
 
-    public HospitalApplicationService(IPatientAggregateStore patientAggregateStore)
+    public HospitalApplicationService(IPatientAggregateStore patientAggregateStore,
+                                      DaprClient daprClient)
     {
         this.patientAggregateStore = patientAggregateStore;
+        this.daprClient = daprClient;
     }
 
     public async Task HandleAsync(SetWeightCommand command)
@@ -33,6 +37,9 @@ public class HospitalApplicationService
         var patient = await patientAggregateStore.LoadAsync(PatientId.Create(command.Id));
         patient.AdmitPatient();
         await patientAggregateStore.SaveAsync(patient);
+
+        var message = $"Patient {patient.Id} admitted";
+        await daprClient.InvokeBindingAsync("petoutputbinding", "create", message);
     }
 
     public async Task HandleAsync(DischargePatientCommand command)
