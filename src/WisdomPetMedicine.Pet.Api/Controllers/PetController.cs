@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WisdomPetMedicine.Pet.Api.ApplicationServices;
 using WisdomPetMedicine.Pet.Api.Commands;
 
@@ -121,5 +122,24 @@ public class PetController : ControllerBase
             logger.LogError(ex.Message);
             return BadRequest(ex.Message);
         }
+    }
+
+    [HttpPost("/petinputbinding")]
+    public async Task<IActionResult> OnInputBinding()
+    {
+        var command = await GetCommandFromRequest();
+        await petApplicationService.HandleCommandAsync(command);
+        return Ok();
+    }
+
+    private async Task<CreatePetCommand> GetCommandFromRequest()
+    {
+        using var streamReader = new StreamReader(Request.Body);
+        var body = await streamReader.ReadToEndAsync();
+        var bytes = Convert.FromBase64String(body);
+        var decodedString = System.Text.Encoding.UTF8.GetString(bytes);
+        var command = JsonConvert.DeserializeObject<CreatePetCommand>(decodedString);
+
+        return command;
     }
 }
