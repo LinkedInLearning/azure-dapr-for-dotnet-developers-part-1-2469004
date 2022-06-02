@@ -1,7 +1,10 @@
 # Azure Dapr for .NET Developers Part 1
-This is the repository for the LinkedIn Learning course `Azure Dapr for .NET Developers Part 1`. The full course is available from [LinkedIn Learning][lil-course-url].
+This is the repository for the LinkedIn Learning course Azure Dapr for .NET Developers Part 1. The full course is available from [LinkedIn Learning][lil-course-url].
 
-_See the readme file in the main branch for updated instructions and information._
+![Azure Dapr for .NET Developers Part 1][lil-thumbnail-url] 
+
+Azure Dapr can help .NET developers solve several challenges that they face when building distributed applications. In this course, Rodrigo Díaz Concha shows you how to build distributed applications and microservices easily with Dapr.  Rodrigo begins by introducing Dapr as a portable, event-driven runtime for creating distributed applications in the cloud. He explains the sidecar pattern and the different components and tools that you will use in Dapr. Rodrigo walks you through preparing your development environment, then covers some of the most important building blocks in Dapr. This course focuses on publish and subscribe (pub/sub), service invocation, state management, and bindings.
+
 ## Instructions
 This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
 
@@ -20,15 +23,15 @@ To resolve this issue:
     Add changes to git using this command: git add .
 	Commit changes using this command: git commit -m "some message"
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+### Instructor
+
+Rodrigo Díaz Concha 
+                            
 
 
-[0]: # (Replace these placeholder URLs with actual course URLs)
+                            
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: http://
+Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/rodrigo-diaz-concha).
 
+[lil-course-url]: https://www.linkedin.com/learning/azure-dapr-for-dot-net-developers-part-1
+[lil-thumbnail-url]: https://cdn.lynda.com/course/2469004/2469004-1653669319069-16x9.jpg
